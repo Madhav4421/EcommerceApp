@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/products")
 @RestController
 public class ProductController {
@@ -32,4 +34,9 @@ public class ProductController {
         String uptodate = service.updateProduct(id,productData);
         return ResponseEntity.ok(uptodate);
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> search(@RequestParam String keyword){
+        return ResponseEntity.ok(service.searchProduct(keyword));
+    }
+
 }

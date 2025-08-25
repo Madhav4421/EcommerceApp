@@ -5,6 +5,7 @@ import com.ecommerce.dao.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,5 +42,8 @@ public class ProductService {
     else{
         throw new RuntimeException("Product not found id "+id);
         }
+}
+public List<Product> searchProduct(String keyword){
+         return productRepository.findByNameContainingIgnoreCase(keyword);
 }
 }
