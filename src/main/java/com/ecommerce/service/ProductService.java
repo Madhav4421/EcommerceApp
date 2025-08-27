@@ -3,6 +3,9 @@ package com.ecommerce.service;
 import com.ecommerce.dao.Product;
 import com.ecommerce.dao.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +24,7 @@ public class ProductService {
         return productRepository.findById(id).get();
     }
 
-    public String  removeProduct(Long id){
+    public String removeProduct(Long id){
          productRepository.deleteById(id);
          return "Product delete Successfully";
     }
@@ -46,4 +49,8 @@ public class ProductService {
 public List<Product> searchProduct(String keyword){
          return productRepository.findByNameContainingIgnoreCase(keyword);
 }
+    public Page<Product> getProducts(int page, int size, String sortBy) {
+        return productRepository.findAll(PageRequest.of(page, size, Sort.by(sortBy)));
+    }
+
 }

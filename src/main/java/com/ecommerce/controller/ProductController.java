@@ -3,6 +3,7 @@ package com.ecommerce.controller;
 import com.ecommerce.dao.Product;
 import com.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,14 @@ public class ProductController {
         return ResponseEntity.ok(uptodate);
     }
     @GetMapping("/search")
-    public ResponseEntity<List<Product>> search(@RequestParam String keyword){
+    public ResponseEntity<List<Product>> search(@PathVariable("search") @RequestParam String keyword){
         return ResponseEntity.ok(service.searchProduct(keyword));
     }
-
+    @GetMapping("/page")
+    public ResponseEntity<Page<Product>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id") String sortBy) {
+        return ResponseEntity.ok(service.getProducts(page, size, sortBy));
+    }
 }
